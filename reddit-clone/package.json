@@ -1,0 +1,29 @@
+{
+  "name": "reddit-clone",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/next-js": "^2.2.0",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/open-sans": "^5.0.22",
+    "firebase": "^10.8.0",
+    "framer-motion": "^11.0.3",
+    "next": "14.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "recoil": "^0.7.7"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.52",
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.1.0"
+  }
+}
