@@ -2,8 +2,9 @@ import '../styles/globals.css'
 import type { AppProps } from "next/app" 
 import { ChakraProvider } from '@chakra-ui/react'
 import { theme } from '../chakra/theme'
-import Layout from '../components/Layout/Layout';
+import Layout from '../components/Layout';
 import { RecoilRoot } from 'recoil';
+import "../firebase/clientApp";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
