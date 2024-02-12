@@ -24,7 +24,7 @@ import { IoSparkles } from "react-icons/io5";
 
 type MenuWrapperProps = {};
 
-const MenuWrapper: Raect.FC<MenuWrapperProps> = () => {
+const MenuWrapper: React.FC<MenuWrapperProps> = () => {
     const [authModal, setModalState] = useRecoilState(authModalState);
     const [user] = useAuthState(auth);
     return (
