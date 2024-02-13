@@ -8,7 +8,7 @@ import {
   directoryMenuState,
 } from "../../atoms/directoryMenuAtom";
 import { auth } from "../../firebase/clientApp";
-//import Directory from "./Directory";
+import Directory from "./Directory";
 import RightContent from "./RightContent";
 import SearchInput from "./SearchInput";
 import router from "next/router";
