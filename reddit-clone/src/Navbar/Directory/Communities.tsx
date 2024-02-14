@@ -11,8 +11,8 @@ import {
   import { GrAdd } from "react-icons/gr";
   import { useRecoilValue } from "recoil";
   
-  import { CommunityState } from "../../atoms/CommunitiesAtom";
-  import CreateCommunityModel from "../../components/Modal/CreateCommunity/CreateCommunityModel";
+  import { CommunityState } from "../../atoms/communitiesAtom";
+  import CreateCommunityModel from "../../components/Modal/CreateCommunity";
   import MenuListItem from "./MenuListItem";
   
   type CommunitiesProps = {};
