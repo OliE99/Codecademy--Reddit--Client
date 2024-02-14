@@ -5,6 +5,8 @@ import { ModalView } from "../../../atoms/authModalAtom";
 import { auth } from "../../../firebase/clientApp";
 import { FIREBASE_ERRORS } from "../../../firebase/errors";
 import InputItem from "../../Layout/InputItem";
+import { CollectionReference, DocumentData, collection } from "firebase/firestore";
+import { createUserDocument } from "../../../../functions/src";
 
 type SignUpProps = {
   toggleView: (view: ModalView) => void;
@@ -95,3 +97,12 @@ const SignUp: React.FC<SignUpProps> = ({ toggleView }) => {
   );
 };
 export default SignUp;
+
+function addDoc(arg0: CollectionReference<DocumentData, DocumentData>, user: User) {
+  throw new Error("Function not implemented.");
+}
+
+
+function useEffect(arg0: () => void, arg1: any[]) {
+  throw new Error("Function not implemented.");
+}
