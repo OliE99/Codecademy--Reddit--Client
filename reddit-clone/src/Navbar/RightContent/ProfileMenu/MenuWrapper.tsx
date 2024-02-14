@@ -12,8 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
-import { authModalState } from "../../../../atoms/authModalAtom";
-import { auth } from "../../../../firebase/clientApp";
+import { authModalState } from "../../../atoms/authModalAtom";
+import { auth } from "../../../firebase/clientApp";
 
 import NoUserList from "./NoUserList";
 import UserList from "./UserList";
