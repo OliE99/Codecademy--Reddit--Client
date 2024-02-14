@@ -15,20 +15,20 @@ const Login: React.FC<LoginProps> = () => {
     email: "",
     password: "",
   });
-  const [formError, setFormError] = useState("");
+  const [error, setError] = useState("");
   const searchBorder = useColorModeValue("blue.500", "#4A5568");
   const inputBg = useColorModeValue("gray.50", "#4A5568");
   const focusedInputBg = useColorModeValue("white", "#2D3748");
   const placeholderColor = useColorModeValue("gray.500", "#CBD5E0");
 
-  const [signInWithEmailAndPassword, user, loading, error] =
+  const [signInWithEmailAndPassword, user, loading, userError] =
     useSignInWithEmailAndPassword(auth);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (formError) setFormError("");
+    if (error) setError("");
     if (!loginForm.email.includes("@")) {
-      return setFormError ("Please enter a valid email");
+      return setError ("Please enter a valid email");
     }
 
     //Valid form inputs
@@ -90,8 +90,8 @@ const Login: React.FC<LoginProps> = () => {
         bg={inputBg}
       />
       <Text textAlign="center" color="red" fontSize="10pt">
-        {formError || 
-          FIREBASE_ERRORS[error?.message as keyof typeof FIREBASE_ERRORS]}
+        {error ||
+          FIREBASE_ERRORS[userError?.message as keyof typeof FIREBASE_ERRORS]}
       </Text>
       <Button
         width="100%"
