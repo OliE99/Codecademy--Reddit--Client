@@ -1,103 +1,82 @@
-import React, { useEffect } from "react";
 import {
+  Button,
   Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
+  useDisclosure,
+  Text,
 } from "@chakra-ui/react";
+import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { authModalState } from "../../../atoms/authModalAtom";
-import { userState } from "../../../atoms/userAtom";
+import { useRecoilState } from "recoil";
+import { authModelState } from "../../../atoms/authModalAtom";
 import { auth } from "../../../firebase/clientApp";
-import AuthInputs from "./Inputs";
+import AuthInput from "./Inputs";
 import OAuthButtons from "./OAuthButtons";
 import ResetPassword from "./ResetPassword";
-import ModalWrapper from "../ModalWrapper";
 
-type AuthModalProps = {};
+const AuthModel: React.FC = () => {
+  //const { isOpen, onOpen, onClose } = useDisclosure();
+  const [modelState, setModelState] = useRecoilState(authModelState);
+  const [user, loading, error] = useAuthState(auth);
 
-const AuthModal: React.FC<AuthModalProps> = () => {
-  const [modalState, setModalState] = useRecoilState(authModalState);
-  const handleClose = () =>
-    setModalState((prev) => ({
+  const handleClose = () => {
+    setModelState((prev) => ({
       ...prev,
       open: false,
     }));
-
-  const currentUser = useRecoilValue(userState);
-  const [user, error] = useAuthState(auth);
-
-  // Can implement at the end
-  // useEffect(() => {
-  //   if (currentUser) handleClose();
-  // }, [currentUser]);
-  const toggleView = (view: string) => {
-    setModalState({
-      ...modalState,
-      view: view as typeof modalState.view,
-    });
   };
 
   useEffect(() => {
     if (user) handleClose();
+    //console.log(user, "🔥🔥");
   }, [user]);
 
   return (
-    <ModalWrapper isOpen={modalState.open} onClose={handleClose}>
-      <ModalHeader display="flex" flexDirection="column" alignItems="center">
-        {modalState.view === "login" && "Login"}
-        {modalState.view === "signup" && "Sign Up"}
-        {modalState.view === "resetPassword" && "Reset Password"}
-      </ModalHeader>
-      <ModalCloseButton />
-      <ModalBody
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        pb={6}
-      >
-        <Flex
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          width="70%"
-        >
-          {modalState.view === "login" || modalState.view === "signup" ? (
-            <>
-              <OAuthButtons />
-              OR
-              <AuthInputs toggleView={toggleView} />
-            </>
-          ) : (
-            <ResetPassword toggleView={toggleView} />
-          )}
-          {/* // Will implement at end of tutorial */}
-          {/* {user && !currentUser && (
+    <>
+      <Modal isOpen={modelState.open} onClose={handleClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader textAlign="center">
+            {modelState.view === "login" && "Login"}
+            {modelState.view === "signup" && "Sign Up"}
+            {modelState.view === "resetPassword" && "Reset Password"}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            pb={6}
+          >
+            <Flex
+              direction="column"
+              align="center"
+              justify="center"
+              width="70%"
+            >
+              {modelState.view === "login" || modelState.view === "signup" ? (
                 <>
-                  <Spinner size="lg" mt={2} mb={2} />
-                  <Text fontSize="8pt" textAlign="center" color="blue.500">
-                    You are logged in. You will be redirected soon
+                  <OAuthButtons />
+                  <Text color="gray.500" fontWeight={700}>
+                    OR
                   </Text>
+                  <AuthInput />
                 </>
-              )} */}
-          {/* {false ? (
-                <Flex
-                  direction="column"
-                  justifyContent="center"
-                  alignItems="center"
-                  height="100%"
-                >
-                </Flex>
               ) : (
-              )} */}
-        </Flex>
-      </ModalBody>
-    </ModalWrapper>
+                <ResetPassword />
+              )}
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
-export default AuthModal;
+export default AuthModel;

@@ -1,46 +1,48 @@
 import React from "react";
-import { Flex, InputGroup, InputLeftElement, Input } from "@chakra-ui/react";
+import {
+  Flex,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-import { auth } from "firebase-admin";
-import { user } from "firebase-functions/v1/auth";
 import { User } from "firebase/auth";
 
 type SearchInputProps = {
-  user: User;
+  user?: User | null;
 };
 
 const SearchInput: React.FC<SearchInputProps> = ({ user }) => {
+  const bg = useColorModeValue("gray.100", "whiteAlpha.100");
+  const iconColor = useColorModeValue("gray.300", "white");
+  const focusedInputBg = useColorModeValue("white", "#171923");
+  const searchBorder = useColorModeValue("gray.200", "#4A5568");
+
   return (
-    <Flex
-      flexGrow={1}
-      maxWidth={user ? "auto" : "600px"}
-      mr={2}
-      alignItems="center"
-    >
+    <Flex flexGrow={1} maxWidth={user ? "auto" : "600px"} mr={2} align="center">
       <InputGroup>
-        <InputLeftElement
-          pointerEvents="none"
-          color="gray.400"
-          // children={<SearchIcon mb={2} />}
-        >
-          <SearchIcon mb={2} />
+        <InputLeftElement pointerEvents="none">
+          <SearchIcon color={iconColor} mb={1} />
         </InputLeftElement>
         <Input
+          type="tel"
           placeholder="Search Reddit"
           fontSize="10pt"
-          _placeholder={{ color: "gray.500" }}
+          bg={bg}
+          _placeholder={{ colors: "gray.500" }}
           _hover={{
-            bg: "white",
+            bg: focusedInputBg,
             border: "1px solid",
-            borderColor: "blue.500",
+            borderColor: searchBorder,
           }}
           _focus={{
             outline: "none",
             border: "1px solid",
-            borderColor: "blue.500",
+            borderColor: searchBorder,
+            bg: focusedInputBg,
           }}
-          height="34px"
-          bg="gray.50"
         />
       </InputGroup>
     </Flex>
