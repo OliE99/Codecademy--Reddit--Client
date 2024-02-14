@@ -16,20 +16,22 @@ const SignUp: React.FC = () => {
     password: "",
     conformPassword: "",
   });
-  const [error, setError] = useState("");
   const searchBorder = useColorModeValue("blue.500", "#4A5568");
   const inputBg = useColorModeValue("gray.50", "#4A5568");
   const focusedInputBg = useColorModeValue("white", "#2D3748");
   const placeholderColor = useColorModeValue("gray.500", "#CBD5E0");
 
   //console.log(signUpForm);
-
+  const [error, setError] = useState("");
   const [createUserWithEmailAndPassword, userCred, loading, userError] =
     useCreateUserWithEmailAndPassword(auth);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (error) setError("");
+    if (!signUpForm.email.includes("@")) {
+      return setError("Please Enter A Valid Email")
+    }
 
     if (signUpForm.password !== signUpForm.conformPassword) {
       setError("Password Do Not Match");
@@ -129,15 +131,10 @@ const SignUp: React.FC = () => {
         }}
         bg={inputBg}
       />
-      {error ||
-        (userError && (
-          <Text textAlign="center" color="red" fontSize="10px">
-            {error ||
-              FIREBASE_ERRORS[
-                userError.message as keyof typeof FIREBASE_ERRORS
-              ]}
-          </Text>
-        ))}
+      <Text textAlign="center" mt={2} color="red" fontSize="10px">
+          {error ||
+            FIREBASE_ERRORS[userError?.message as keyof typeof FIREBASE_ERRORS]}
+      </Text>
       <Button
         width="100%"
         height="36px"
