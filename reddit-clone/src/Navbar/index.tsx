@@ -12,8 +12,8 @@ import {
 import { defaultMenuItem } from "../atoms/directoryMenuAtom";
 import { auth, firestore } from "../firebase/clientApp";
 import useDirectory from "../hooks/useDirectory";
-import Directory from "./Directory/Directory";
-import RightContent from "./RightContent/RightContent";
+import Directory from "./Directory";
+import RightContent from "./RightContent";
 import SearchInput from "./SearchInput";
 import { redditProfileImage } from "./store";
 
