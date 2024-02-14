@@ -1,22 +1,23 @@
+import { Button, Flex } from "@chakra-ui/react";
+import { signOut, User } from "firebase/auth";
 import React from "react";
-import { Flex } from "@chakra-ui/react";
-import { User } from "firebase/auth";
-import AuthModal from "../../components/Modal/Auth";
+import AuthModel from "../../components/Modal/Auth/AuthModel";
+import { auth } from "../../firebase/clientApp";
 import AuthButtons from "./AuthButtons";
 import Icons from "./Icons";
-import MenuWrapper from "./ProfileMenu/MenuWrapper";
+import UserMenu from "./UserMenu";
 
 type RightContentProps = {
-  user: User;
+  user?: User | null;
 };
 
 const RightContent: React.FC<RightContentProps> = ({ user }) => {
   return (
     <>
-      <AuthModal />
-      <Flex justifyContent="space-between" alignItems="center">
+      <AuthModel />
+      <Flex justify="center" align="center">
         {user ? <Icons /> : <AuthButtons />}
-        <MenuWrapper />
+        <UserMenu user={user} />
       </Flex>
     </>
   );
