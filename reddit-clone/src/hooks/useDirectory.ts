@@ -1,9 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { communityState } from "../atoms/communitiesAtom";
+import { CommunityState } from "../atoms/communitiesAtom";
 import {
-  defaultMenuItem,
   DirectoryMenuItem,
   directoryMenuState,
 } from "../atoms/directoryMenuAtom";
@@ -13,8 +12,7 @@ const useDirectory = () => {
   const [directoryState, setDirectoryState] =
     useRecoilState(directoryMenuState);
   const router = useRouter();
-
-  const communityStateValue = useRecoilValue(communityState);
+  const communityStateValue = useRecoilValue(CommunityState);
 
   const onSelectMenuItem = (menuItem: DirectoryMenuItem) => {
     setDirectoryState((prev) => ({
@@ -22,7 +20,7 @@ const useDirectory = () => {
       selectedMenuItem: menuItem,
     }));
 
-    router?.push(menuItem.link);
+    router.push(menuItem.link);
     if (directoryState.isOpen) {
       toggleMenuOpen();
     }
@@ -36,34 +34,22 @@ const useDirectory = () => {
   };
 
   useEffect(() => {
-    const { community } = router.query;
+    const { currentCommunity } = communityStateValue;
 
-    // const existingCommunity =
-    //   communityStateValue.visitedCommunities[community as string];
-
-    const existingCommunity = communityStateValue.currentCommunity;
-
-    if (existingCommunity.id) {
+    if (currentCommunity) {
       setDirectoryState((prev) => ({
         ...prev,
         selectedMenuItem: {
-          displayText: `r/${existingCommunity.id}`,
-          link: `r/${existingCommunity.id}`,
+          displayText: `r/${currentCommunity.id}`,
+          link: `/r/${currentCommunity.id}`,
+          imageURL: currentCommunity.imageURL,
           icon: FaReddit,
           iconColor: "blue.500",
-          imageURL: existingCommunity.imageURL,
         },
       }));
-      return;
     }
-    setDirectoryState((prev) => ({
-      ...prev,
-      selectedMenuItem: defaultMenuItem,
-    }));
   }, [communityStateValue.currentCommunity]);
-  //                              ^ used to be communityStateValue.vistedCommunities
 
-  return { directoryState, onSelectMenuItem, toggleMenuOpen };
+  return { directoryState, toggleMenuOpen, onSelectMenuItem };
 };
-
 export default useDirectory;
