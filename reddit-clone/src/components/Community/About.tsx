@@ -21,8 +21,10 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { RiCakeLine } from "react-icons/ri";
 import { useSetRecoilState } from "recoil";
 import { Community } from '../../atoms/communitiesAtom';
+
 import { Community, CommunityState } from "../../atoms/communitiesAtom";
 import { auth, firestore, storage } from "../../firebase/clientApp";
+import useSelectFile from "../../hooks/useSelectFile";
 
 type AboutProps = {
     commmunityData: Community;
@@ -31,11 +33,36 @@ type AboutProps = {
 const About:React.FC<AboutProps> = ({ commmunityData }) => {
     const [user] = useAuthState(auth);
     const selectedFieldRef = useRef<HTMLInputElement>(null);
+    const { selectedFile, setSelectedFile, onSelectedFile } = useSelectFile();
     const [uploadingImage, setUploadingImage] = useState(false);
     const setCommunityStateValue = useSetRecoilState(CommunityState);
     const bg = useColorModeValue("white", "#1A202C");
 
-    
+    const onUploadingImage = async () => {
+        if(!selectedFile) return;
+        setUploadingImage(true);
+
+        try {
+            const imageRef = ref(storage, `communities/${commmunityData.id}/image`);
+            await uploadString(imageRef, selectedFile, "data_url");
+            const downLodeURL = await getDownloadURL(imageRef);
+            await updateDoc(doc(firestore, "communities", commmunityData.id), {
+                imageURL: downLodeURL,
+            });
+
+            setCommunityStateValue((prev) => ({
+                ...prev,
+                currentCommunity: {
+                    ...prev.currentCommunity,
+                    imageURL: downLodeURL,
+                } as Community,
+            }));
+        } catch (error) {
+            console.log("onUploader Image", error);
+        }
+        setUploadingImage(false);
+    };
+
     return (
         <Box position="sticky" top="14px">
             <Flex
