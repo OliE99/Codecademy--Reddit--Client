@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 
 import { firestore } from "../../firebase/clientApp";
 import MessageItems from "./MessageItems";
+import SkeletonLoader from "../common/SkeletonLoader";
 
 export interface MessageBody {
     id: string;
@@ -72,7 +73,7 @@ export interface MessageBody {
           </Flex>
         ) : (
           <Stack spacing={4} px={4}>
-            {/*<SkeletonLoader count={7} height="60px" />*/}
+            <SkeletonLoader count={7} height="60px" />
           </Stack>
         )}
       </Flex>

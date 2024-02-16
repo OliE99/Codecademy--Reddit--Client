@@ -11,7 +11,7 @@ import {
   import { motion } from "framer-motion";
   import moment from "moment";
   import React, { useEffect, useState } from "react";
-  
+
   import { MessageBody } from "./Messages";
   
   type Props = {
