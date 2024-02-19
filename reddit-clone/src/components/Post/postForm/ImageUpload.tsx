@@ -5,13 +5,14 @@ import {
     Stack,
     useColorModeValue,
   } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import React, { useRef, Ref } from "react";
 
 type ImageUploadProps = {
     selectedFile?: string;
     onSelectedImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
     setSelectTab: (value: string) => void;
     setSelectedFile: (value: string) => void;
+    selectFileRef: React.RefObject<HTMLInputElement>;
 };
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
@@ -19,6 +20,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     onSelectedImage,
     setSelectTab,
     setSelectedFile,
+    selectFileRef,
   }) => {
     const selectedFileRef = useRef<HTMLInputElement>(null);
     const searchBorder = useColorModeValue("gray.200", "#718096");
@@ -63,6 +65,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               type="file"
               hidden
               onChange={onSelectedImage}
+              id="file-upload"
+              accept="image/x-png,image/gif,image/jpeg"
             />
           </Flex>
         )}
