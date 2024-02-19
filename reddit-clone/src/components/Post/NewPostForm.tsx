@@ -133,7 +133,7 @@ import {
       setLoading(false);
     };
   
-    /*
+    
     const onSelectedImage = (event: React.ChangeEvent<HTMLInputElement>) => {
       const reader = new FileReader();
   
@@ -147,7 +147,7 @@ import {
         }
       };
     };
-  */
+  
   
     const encryptData = (name: string, value: string) => {
       try {
