@@ -29,7 +29,7 @@ import {
   import TextInput from "./postForm/TextInput";
   import TabItem from "./TabItem";
   
-  // const secretPass = process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS;
+  const secretPass = process.env.NEXT_PUBLIC_CRYPTO_SECRET_PASS;
   
   type NewPostFormProps = {
     user: User;
@@ -143,7 +143,7 @@ import {
   
       reader.onload = (readerEvent) => {
         if (readerEvent.target?.result) {
-          setSelectedFile(readerEvent.target.result as string);
+          setSelectedFile(readerEvent.target?.result as string);
         }
       };
     };
